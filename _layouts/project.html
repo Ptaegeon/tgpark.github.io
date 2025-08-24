@@ -1,0 +1,56 @@
+---
+layout: default
+---
+<style>
+  :root{--fg:#0f172a;--muted:#475569;--card:#f8fafc;--border:#e2e8f0;--accent:#2563eb;--accent-weak:#dbeafe;--radius:18px;--maxw:1024px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:32px 20px}
+  .kicker{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:clamp(28px,3.5vw,44px);line-height:1.2;margin:6px 0 12px}
+  .authors,.affil{color:var(--muted)}
+  .btnrow{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:#fff;border-radius:999px;padding:10px 14px;font-weight:600}
+  section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin:18px 0}
+  figure{margin:0;border:1px dashed var(--border);border-radius:14px;padding:8px;background:#fff}
+  figcaption{font-size:13px;color:var(--muted)}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">{{ page.venue }} • {{ page.year }}</div>
+    <h1>{{ page.title }}</h1>
+    {% if page.authors %}<div class="authors">{{ page.authors }}</div>{% endif %}
+    {% if page.affil %}<div class="affil">{{ page.affil }}</div>{% endif %}
+
+    <div class="btnrow">
+      {% if page.links.paper %}<a class="btn" href="{{ page.links.paper }}" target="_blank">Paper</a>{% endif %}
+      {% if page.links.code %}<a class="btn" href="{{ page.links.code }}" target="_blank">Code</a>{% endif %}
+      {% if page.links.poster %}<a class="btn" href="{{ page.links.poster }}" target="_blank">Poster</a>{% endif %}
+      {% if page.links.slides %}<a class="btn" href="{{ page.links.slides }}" target="_blank">Slides</a>{% endif %}
+      {% if page.links.talk %}<a class="btn" href="{{ page.links.talk }}" target="_blank">Talk</a>{% endif %}
+    </div>
+  </header>
+
+  <section id="abstract">
+    <h2>Abstract</h2>
+    {{ content }}  <!-- Markdown 본문이 여기로 들어옵니다 -->
+  </section>
+
+  {% if page.figures %}
+  <section id="figures">
+    <h2>Figures</h2>
+    {% for f in page.figures %}
+      <figure>
+        <img src="{{ f.src | relative_url }}" alt="{{ f.alt }}" style="width:100%;height:auto" />
+        {% if f.caption %}<figcaption>{{ f.caption }}</figcaption>{% endif %}
+      </figure>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if page.bibtex %}
+  <section id="bibtex">
+    <h2>BibTeX</h2>
+    <pre>{{ page.bibtex }}</pre>
+  </section>
+  {% endif %}
+</div>
